@@ -1,0 +1,502 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="page1">
+        <div class="contents" style="position: absolute; width: 60%; left: 20%;">
+            <h1>Case:</h1>
+            <p id="vignette-text-p1">
+                PLACEHOLDER VIGNETTE TEXT
+            </p>
+            <p style="font-weight: bold;">
+                Please review the case and chest x-ray, and provide your decision
+                about diagnosis and management.
+            </p>
+            <div style="height: 1px; width: 100%; background-color:#20a5d6;"></div>
+            <br/>
+            <label for="q0-answer">What is your provisional diagnosis?</label>
+            <br/>
+            <textarea id="q0-answer" name="q0-answer" rows="4" cols="50"></textarea>
+            <h2>Please rate your confidence in the provisional diagnosis?</h2>
+            <div>
+                <ul class="radio-button">
+                    <li>
+                        <input type="radio" id="rb-p1-A1" name="rb-p1-A" data-name="1"/>
+                        <label for="rb-p1-A1">Very Unconfident</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p1-A2" name="rb-p1-A" data-name="2"/>
+                        <label for="rb-p1-A2">Unconfident</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p1-A3" name="rb-p1-A" data-name="3"/>
+                        <label for="rb-p1-A3">Slightly Unconfident</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p1-A4" name="rb-p1-A" data-name="4"/>
+                        <label for="rb-p1-A4">Neither</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p1-A5" name="rb-p1-A" data-name="5"/>
+                        <label for="rb-p1-A5">Slightly Confident</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p1-A6" name="rb-p1-A" data-name="6"/>
+                        <label for="rb-p1-A6">Confident</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p1-A7" name="rb-p1-A" data-name="7"/>
+                        <label for="rb-p1-A7">Very Confident</label>
+                    </li>
+                </ul>
+            </div>
+            <br style="clear:both"/>
+            <br/>
+            <div style="width: 100%;">
+                <p class="errors" id="errors-p1" style="float: left;"></p>
+                <button class="button" id="continue-button-p1" style="float: right; margin-top: 20px;">
+                    View CXR/Continue 🡆
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="page2" class="hidden">
+        <div id="xray-viewer">
+            <iframe id="xray-viewer-iframe" class="max-width-height" src="" frameborder="0"></iframe>
+        </div>
+        <div id="decision-support">
+            <h1 id="decision-placeholder">No decision support provided in this trial</h1>
+            <div id="decision-support-container" class="max-width-height">
+                <iframe id="decision-support-iframe" class="max-width-height" src="" frameborder="0"></iframe>
+            </div>
+        </div>
+        <div class="container" id="vignette-p2">
+            <p class="contents" id="vignette-text-p2">
+                PLACEHOLDER VIGNETTE TEXT
+            </p>
+        </div>
+        <div class="container" id="response-container">
+            <div class="contents" id="response">
+
+                Does the CXR demonstrate pathology?
+                <input type="radio" name="q1-yes-no" id="q1-yes" data-name="Yes">
+                <label for="q1-yes">Yes</label>
+                <input type="radio" name="q1-yes-no" id="q1-no" data-name="No">
+                <label for="q1-no">No</label>
+                <br/>
+                <label for="q1-answer">If yes, what?</label>
+                <br/>
+                <textarea id="q1-answer" name="q1-answer" rows="4" cols="50"></textarea>
+                <br/><br/>
+
+                Does patient urgently (&#60;6hrs) require further imaging?
+                <input type="radio" name="q2-yes-no" id="q2-yes" data-name="Yes">
+                <label for="q2-yes">Yes</label>
+                <input type="radio" name="q2-yes-no" id="q2-no" data-name="No">
+                <label for="q2-no">No</label>
+                <br/>
+                <label for="q2-answer">If yes, what?</label>
+                <br/>
+                <textarea id="q2-answer" name="q2-answer" rows="4" cols="50"></textarea>
+                <br/><br/>
+
+                Does patient require urgent (&#60;6hrs) management?
+                <input type="radio" name="q3-yes-no" id="q3-yes" data-name="Yes">
+                <label for="q3-yes">Yes</label>
+                <input type="radio" name="q3-yes-no" id="q3-no" data-name="No">
+                <label for="q3-no">No</label>
+                <br/>
+                <label for="q3-answer">If yes, what?</label>
+                <br/>
+                <textarea id="q3-answer" name="q3-answer" rows="4" cols="50"></textarea>
+                <br/><br/>
+                
+                Will you admit this patient?
+                <input type="radio" name="q4-yes-no" id="q4-yes" data-name="Admit">
+                <label for="q4-yes">Admit</label>
+                <input type="radio" name="q4-yes-no" id="q4-no" data-name="Discharge">
+                <label for="q4-no">Discharge</label>
+                <br/>
+                <label for="q4-answer">Briefly justify your decision</label>
+                <br/>
+                <textarea id="q4-answer" name="q4-answer" rows="4" cols="50"></textarea>
+                <br/><br/>
+
+                If you discharge this patient, what follow up does the patient require?<br/>
+                <input type="radio" name="q5-radio" id="q5-GP" data-name="GP review">
+                <label for="q5-GP">GP review</label><br/>
+                <input type="radio" name="q5-radio" id="q5-Spec" data-name="Specialist review">
+                <label for="q5-Spec">Specialist review</label><br/>
+                <input type="radio" name="q5-radio" id="q5-Prog" data-name="Progress imaging">
+                <label for="q5-Prog">Progress imaging</label><br/>
+                <input type="radio" name="q5-radio" id="q5-Nil" data-name="Nil specific">
+                <label for="q5-Nil">Nil specific</label>
+                <br/>
+                <label for="q5-answer">Briefly outline follow up required</label>
+                <br/>
+                <textarea id="q5-answer" name="q5-answer" rows="4" cols="50"></textarea>
+                
+                
+                <p class="errors" id="errors-p2"></p>
+                <div style="width: 100%; display: table;">
+                    <button class="button" id="continue-button-p2">
+                        Submit and continue 🡆
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="page3" class="hidden">
+        <div class="contents" style="position: absolute; width: 80%; left: 10%;">
+            
+            <h2>Please rate your confidence in this diagnosis.</h2>
+            <div>
+                <ul class="radio-button">
+                    <li>
+                        <input type="radio" id="rb-p3-A1" name="rb-p3-A" data-name="1"/>
+                        <label for="rb-p3-A1">Very Unconfident</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-A2" name="rb-p3-A" data-name="2"/>
+                        <label for="rb-p3-A2">Unconfident</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-A3" name="rb-p3-A" data-name="3"/>
+                        <label for="rb-p3-A3">Slightly Unconfident</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-A4" name="rb-p3-A" data-name="4"/>
+                        <label for="rb-p3-A4">Neither</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-A5" name="rb-p3-A" data-name="5"/>
+                        <label for="rb-p3-A5">Slightly Confident</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-A6" name="rb-p3-A" data-name="6"/>
+                        <label for="rb-p3-A6">Confident</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-A7" name="rb-p3-A" data-name="7"/>
+                        <label for="rb-p3-A7">Very Confident</label>
+                    </li>
+                </ul>
+            </div>
+            <br style="clear:both"/>
+            <br style="clear:both"/>
+
+            <h2>I considered the output of the Chest X-ray AI in my clinical decisions for this patient scenario.</h2>
+            <div>
+                <ul class="radio-button">
+                    <li>
+                        <input type="radio" id="rb-p3-B1" name="rb-p3-B" data-name="1"/>
+                        <label for="rb-p3-B1">Strongly Disagree</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-B2" name="rb-p3-B" data-name="2"/>
+                        <label for="rb-p3-B2">Disagree</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-B3" name="rb-p3-B" data-name="3"/>
+                        <label for="rb-p3-B3">Slightly Disagree</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-B4" name="rb-p3-B" data-name="4"/>
+                        <label for="rb-p3-B4">Neither</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-B5" name="rb-p3-B" data-name="5"/>
+                        <label for="rb-p3-B5">Slightly Agree</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-B6" name="rb-p3-B" data-name="6"/>
+                        <label for="rb-p3-B6">Agree</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-B7" name="rb-p3-B" data-name="7"/>
+                        <label for="rb-p3-B7">Strongly Agree</label>
+                    </li>
+                </ul>
+            </div>
+            <br style="clear:both"/>
+            <br style="clear:both"/>
+
+            <h2>The content of this patient scenario was very complex.</h2>
+            <div>
+                <ul class="radio-button">
+                    <li>
+                        <input type="radio" id="rb-p3-C0" name="rb-p3-C" data-name="0"/>
+                        <label for="rb-p3-C0">0 (Not at all the case)</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-C1" name="rb-p3-C" data-name="1"/>
+                        <label for="rb-p3-C1">1</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-C2" name="rb-p3-C" data-name="2"/>
+                        <label for="rb-p3-C2">2</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-C3" name="rb-p3-C" data-name="3"/>
+                        <label for="rb-p3-C3">3</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-C4" name="rb-p3-C" data-name="4"/>
+                        <label for="rb-p3-C4">4</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-C5" name="rb-p3-C" data-name="5"/>
+                        <label for="rb-p3-C5">5</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-C6" name="rb-p3-C" data-name="6"/>
+                        <label for="rb-p3-C6">6</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-C7" name="rb-p3-C" data-name="7"/>
+                        <label for="rb-p3-C7">7</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-C8" name="rb-p3-C" data-name="8"/>
+                        <label for="rb-p3-C8">8</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-C9" name="rb-p3-C" data-name="9"/>
+                        <label for="rb-p3-C9">9</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-C10" name="rb-p3-C" data-name="10"/>
+                        <label for="rb-p3-C10">10 (Completely the case)</label>
+                    </li>
+                </ul>
+            </div>
+            <br style="clear:both"/>
+            <br style="clear:both"/>
+
+            <h2>I invested a very high mental effort in the complexity of this patient scenario.</h2>
+            <div>
+                <ul class="radio-button">
+                    <li>
+                        <input type="radio" id="rb-p3-D0" name="rb-p3-D" data-name="0"/>
+                        <label for="rb-p3-D0">0 (Not at all the case)</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-D1" name="rb-p3-D" data-name="1"/>
+                        <label for="rb-p3-D1">1</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-D2" name="rb-p3-D" data-name="2"/>
+                        <label for="rb-p3-D2">2</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-D3" name="rb-p3-D" data-name="3"/>
+                        <label for="rb-p3-D3">3</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-D4" name="rb-p3-D" data-name="4"/>
+                        <label for="rb-p3-D4">4</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-D5" name="rb-p3-D" data-name="5"/>
+                        <label for="rb-p3-D5">5</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-D6" name="rb-p3-D" data-name="6"/>
+                        <label for="rb-p3-D6">6</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-D7" name="rb-p3-D" data-name="7"/>
+                        <label for="rb-p3-D7">7</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-D8" name="rb-p3-D" data-name="8"/>
+                        <label for="rb-p3-D8">8</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-D9" name="rb-p3-D" data-name="9"/>
+                        <label for="rb-p3-D9">9</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-D10" name="rb-p3-D" data-name="10"/>
+                        <label for="rb-p3-D10">10 (Completely the case)</label>
+                    </li>
+                </ul>
+            </div>
+            <br style="clear:both"/>
+            <br style="clear:both"/>
+
+            <h2>The patient scenario I just finished was...</h2>
+            <div>
+                <ul class="radio-button">
+                    <li>
+                        <input type="radio" id="rb-p3-E1" name="rb-p3-E" data-name="1"/>
+                        <label for="rb-p3-E1">Very Easy</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-E2" name="rb-p3-E" data-name="2"/>
+                        <label for="rb-p3-E2">Easy</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-E3" name="rb-p3-E" data-name="3"/>
+                        <label for="rb-p3-E3">Slightly Easy</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-E4" name="rb-p3-E" data-name="4"/>
+                        <label for="rb-p3-E4">Neither</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-E5" name="rb-p3-E" data-name="5"/>
+                        <label for="rb-p3-E5">Slightly Hard</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-E6" name="rb-p3-E" data-name="6"/>
+                        <label for="rb-p3-E6">Hard</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p3-E7" name="rb-p3-E" data-name="7"/>
+                        <label for="rb-p3-E7">Very Hard</label>
+                    </li>
+                </ul>
+            </div>
+            <br style="clear:both"/>
+            <br/>
+
+            <div style="width: 100%; display: table;">
+                <p class="errors" id="errors-p3" style="float: left;"></p>
+                <button class="button" id="continue-button-p3" style="float: right;">
+                    Submit/Continue 🡆
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize onClick functions
+
+        $("#continue-button-p1").click(() => {
+            const errors = validatePage1Inputs();
+            if (errors) {
+                $('#errors-p1').html(errors.toString().replaceAll(',','<br>'));
+                console.log(errors);
+            } else {
+                showPage(2);
+            }
+        })
+
+        $("#continue-button-p2").click(() => {
+            const errors = validatePage2Inputs();
+            if (errors) {
+                $('#errors-p2').html(errors.toString().replaceAll(',','<br>'));
+                console.log(errors);
+            } else {
+                showPage(3);
+            }
+        })
+
+        $("#continue-button-p3").click(() => {
+            const errors = validatePage3Inputs();
+            if (errors) {
+                $('#errors-p3').html(errors.toString().replaceAll(',','<br>'));
+                console.log(errors);
+            } else {
+                
+            }
+        })
+
+        // Since Gorilla loads all screens of a task and hides them until they are used
+        // I believe it gives us more control to have all of our own screens in a single
+        // page, so we can choose how they interact with each other and how data is loaded
+        // into them.
+
+        let currentPage = 1;
+
+        function showPage(page) {
+            $(`#page${currentPage}`).addClass("hidden");
+            currentPage = page;
+            $(`#page${currentPage}`).removeClass("hidden");
+        }
+
+        function validatePage1Inputs() {
+            const errors = [];
+
+            if ($('#q0-answer').val().length === 0) errors.push("Missing provisional diagnosis");
+            if ($('input[name="rb-p1-A"]:checked').length === 0) errors.push("Missing confidence in diagnosis");
+
+            if (errors.length > 0) return errors;
+        }
+
+        function validatePage2Inputs() {
+            const errors = [];
+
+            if ($('input[name="q1-yes-no"]:checked').length === 0) errors.push("Missing yes/no for 'Does the CXR demonstrate pathology?'");
+            if ($('input[name="q2-yes-no"]:checked').length === 0) errors.push("Missing yes/no for 'Does patient urgently (<6hrs) require further imaging?'");
+            if ($('input[name="q3-yes-no"]:checked').length === 0) errors.push("Missing yes/no for 'Does patient require urgent (<6hrs) management?'");
+            if ($('input[name="q4-yes-no"]:checked').length === 0) errors.push("Missing admit/discharge for 'Will you admit this patient?'");
+            if ($('input[name="q5-radio"]:checked').length === 0) errors.push("Missing selection for 'If you discharge this patient what follow up does the patient require?'");
+
+            if (errors.length > 0) return errors;
+        }
+
+        function validatePage3Inputs() {
+            const errors = [];
+
+            if ($('input[name="rb-p3-A"]:checked').length === 0) errors.push("Missing answer for 'Please rate your confidence in this diagnosis.'");
+            if ($('input[name="rb-p3-B"]:checked').length === 0) errors.push("Missing answer for 'I considered the output of the Chest X-ray AI in my clinical decisions for this patient scenario.'");
+            if ($('input[name="rb-p3-C"]:checked').length === 0) errors.push("Missing answer for 'The content of this patient scenario was very complex.'");
+            if ($('input[name="rb-p3-D"]:checked').length === 0) errors.push("Missing answer for 'I invested a very high mental effort in the complexity of this patient scenario.'");
+            if ($('input[name="rb-p3-E"]:checked').length === 0) errors.push("Missing answer for 'The patient scenario I just finished was...'");
+
+            if (errors.length > 0) return errors;
+        }
+
+        // This function returns a JS object containing all of the user's answers
+
+        function retrieveAnswers() {
+            const answers = {};
+            // Page 1
+            answers.provisionalDiagnosis = $('#q0-answer').val();
+            answers.initialConfidence = $('input[name="rb-p1-A"]:checked').data("name");
+
+            // Page 2
+            answers.pathologyYN = $('input[name="q1-yes-no"]:checked').data("name");
+            answers.pathologyAns = $('#q1-answer').val();
+            answers.imagingYN = $('input[name="q2-yes-no"]:checked').data("name");
+            answers.imagingAns = $('#q2-answer').val();
+            answers.managementYN = $('input[name="q3-yes-no"]:checked').data("name");
+            answers.managementAns = $('#q3-answer').val();
+            answers.admitYN = $('input[name="q4-yes-no"]:checked').data("name");
+            answers.admitAns = $('#q4-answer').val();
+            answers.followUp = $('input[name="q5-radio"]:checked').data("name");
+            answers.followUpOutline = $('#q5-answer').val();
+
+            // Page 3
+            answers.finalConfidence = $('input[name="rb-p3-A"]:checked').data("name");
+            answers.consideredXRay = $('input[name="rb-p3-A"]:checked').data("name");
+            answers.complexity = $('input[name="rb-p3-A"]:checked').data("name");
+            answers.highMentalEffort = $('input[name="rb-p3-A"]:checked').data("name");
+            answers.scenarioDifficulty = $('input[name="rb-p3-A"]:checked').data("name");
+
+            console.log(answers);
+            return answers;
+        }
+
+        // This function should be called to set the vignette, xray viewer and decision support on the page
+
+        function loadVariables(vignette, viewer, support) {
+            $('#vignette-text-p1').text(vignette);
+            $('#vignette-text-p2').text(vignette);
+            $('#xray-viewer-iframe').attr("src", viewer);
+            $('#decision-support-iframe').attr("src", support);
+        }
+
+    </script>
+</body>
+</html>
