@@ -379,6 +379,10 @@
     </div>
 
     <script>
+        // This event is triggered when the user presses the submit button on the third screen
+        
+        const submitEvent = new CustomEvent('submitResponse', {response: {}});
+
         // Initialize onClick functions
 
         $("#continue-button-p1").click(() => {
@@ -407,7 +411,7 @@
                 $('#errors-p3').html(errors.toString().replaceAll(',','<br>'));
                 console.log(errors);
             } else {
-                
+                document.dispatchEvent(submitEvent, retrieveAnswers());
             }
         })
 
