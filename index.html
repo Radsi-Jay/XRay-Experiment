@@ -72,7 +72,7 @@
             <iframe id="xray-viewer-iframe" class="max-width-height" src="" frameborder="0"></iframe>
         </div>
         <div id="decision-support">
-            <h1 id="decision-placeholder">No decision support provided in this trial</h1>
+            <h1 id="decision-placeholder">Decision support is not available for this patient</h1>
             <div id="decision-support-container" class="max-width-height">
                 <iframe id="decision-support-iframe" class="max-width-height" src="" frameborder="0"></iframe>
             </div>
@@ -85,63 +85,91 @@
         <div class="container" id="response-container">
             <div class="contents" id="response">
 
-                Does the CXR demonstrate pathology?
-                <input type="radio" name="q1-yes-no" id="q1-yes" data-name="Yes">
-                <label for="q1-yes">Yes</label>
-                <input type="radio" name="q1-yes-no" id="q1-no" data-name="No">
-                <label for="q1-no">No</label>
+                <p style="display: inline-block; margin-top: -10px;">Does the CXR demonstrate pathology?</p>
+                <div style="display: inline-block;">
+                    <ul class="radio-button short">
+                        <li>
+                            <input type="radio" id="rb-p2-A-Yes" name="rb-p2-A" value="Yes"/>
+                            <label for="rb-p2-A-Yes">Yes</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="rb-p2-A-No" name="rb-p2-A" value="No"/>
+                            <label for="rb-p2-A-No">No</label>
+                        </li>
+                    </ul>
+                </div>
+                <textarea placeholder="How does it demonstrate pathology?" id="ta-p2-A" name="ta-p2-A" class="hide" rows="4" cols="50"></textarea>
                 <br/>
-                <label for="q1-answer">If yes, what?</label>
-                <br/>
-                <textarea id="q1-answer" name="q1-answer" rows="4" cols="50"></textarea>
-                <br/><br/>
 
-                Does patient urgently (&#60;6hrs) require further imaging?
-                <input type="radio" name="q2-yes-no" id="q2-yes" data-name="Yes">
-                <label for="q2-yes">Yes</label>
-                <input type="radio" name="q2-yes-no" id="q2-no" data-name="No">
-                <label for="q2-no">No</label>
+                <p style="display: inline-block; margin-top: -10px;">Does patient urgently (&#60;6hrs) require further imaging?</p>
+                <div style="display: inline-block;">
+                    <ul class="radio-button short">
+                        <li>
+                            <input type="radio" id="rb-p2-B-Yes" name="rb-p2-B" value="Yes"/>
+                            <label for="rb-p2-B-Yes">Yes</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="rb-p2-B-No" name="rb-p2-B" value="No"/>
+                            <label for="rb-p2-B-No">No</label>
+                        </li>
+                    </ul>
+                </div>
+                <textarea placeholder="Please elaborate" id="ta-p2-B" name="ta-p2-B" class="hide" rows="4" cols="50"></textarea>
                 <br/>
-                <label for="q2-answer">If yes, what?</label>
-                <br/>
-                <textarea id="q2-answer" name="q2-answer" rows="4" cols="50"></textarea>
-                <br/><br/>
 
-                Does patient require urgent (&#60;6hrs) management?
-                <input type="radio" name="q3-yes-no" id="q3-yes" data-name="Yes">
-                <label for="q3-yes">Yes</label>
-                <input type="radio" name="q3-yes-no" id="q3-no" data-name="No">
-                <label for="q3-no">No</label>
+                <p style="display: inline-block; margin-top: -10px;">Does patient require urgent (&#60;6hrs) management?</p>
+                <div style="display: inline-block;">
+                    <ul class="radio-button short">
+                        <li>
+                            <input type="radio" id="rb-p2-C-Yes" name="rb-p2-C" value="Yes"/>
+                            <label for="rb-p2-C-Yes">Yes</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="rb-p2-C-No" name="rb-p2-C" value="No"/>
+                            <label for="rb-p2-C-No">No</label>
+                        </li>
+                    </ul>
+                </div>
+                <textarea placeholder="Please elaborate" id="ta-p2-C" name="ta-p2-C" class="hide" rows="4" cols="50"></textarea>
                 <br/>
-                <label for="q3-answer">If yes, what?</label>
-                <br/>
-                <textarea id="q3-answer" name="q3-answer" rows="4" cols="50"></textarea>
-                <br/><br/>
                 
-                Will you admit this patient?
-                <input type="radio" name="q4-yes-no" id="q4-yes" data-name="Admit">
-                <label for="q4-yes">Admit</label>
-                <input type="radio" name="q4-yes-no" id="q4-no" data-name="Discharge">
-                <label for="q4-no">Discharge</label>
+                <p style="display: inline-block; margin-top: -10px;">Will you admit this patient?</p>
+                <div style="display: inline-block;">
+                    <ul class="radio-button short">
+                        <li>
+                            <input type="radio" id="rb-p2-D-Yes" name="rb-p2-D" value="Yes"/>
+                            <label for="rb-p2-D-Yes">Yes</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="rb-p2-D-No" name="rb-p2-D" value="No"/>
+                            <label for="rb-p2-D-No">No</label>
+                        </li>
+                    </ul>
+                </div>
+                <textarea placeholder="How does it demonstrate pathology?" id="ta-p2-D" name="ta-p2-D" class="hide" rows="4" cols="50"></textarea>
                 <br/>
-                <label for="q4-answer">Briefly justify your decision</label>
-                <br/>
-                <textarea id="q4-answer" name="q4-answer" rows="4" cols="50"></textarea>
-                <br/><br/>
 
-                If you discharge this patient, what follow up does the patient require?<br/>
-                <input type="radio" name="q5-radio" id="q5-GP" data-name="GP review">
-                <label for="q5-GP">GP review</label><br/>
-                <input type="radio" name="q5-radio" id="q5-Spec" data-name="Specialist review">
-                <label for="q5-Spec">Specialist review</label><br/>
-                <input type="radio" name="q5-radio" id="q5-Prog" data-name="Progress imaging">
-                <label for="q5-Prog">Progress imaging</label><br/>
-                <input type="radio" name="q5-radio" id="q5-Nil" data-name="Nil specific">
-                <label for="q5-Nil">Nil specific</label>
+                If you discharge this patient, what follow up does the patient require?
+                <ul class="radio-button short" style="margin-top: -5px;">
+                    <li>
+                        <input type="radio" id="rb-p2-E-GP" name="rb-p2-E" value="GP review"/>
+                        <label for="rb-p2-E-GP">GP review</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p2-E-Spec" name="rb-p2-E" value="Specialist review"/>
+                        <label for="rb-p2-E-Spec">Specialist review</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p2-E-Prog" name="rb-p2-E" value="Progress imaging"/>
+                        <label for="rb-p2-E-Prog">Progress imaging</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="rb-p2-E-Nil" name="rb-p2-E" value="Nil specific"/>
+                        <label for="rb-p2-E-Nil">Nil specific</label>
+                    </li>
+                </ul>
                 <br/>
-                <label for="q5-answer">Briefly outline follow up required</label>
-                <br/>
-                <textarea id="q5-answer" name="q5-answer" rows="4" cols="50"></textarea>
+                <textarea placeholder="Briefly outline follow up required" id="ta-p2-E" name="ta-p2-E" class="hide" rows="4" cols="50"></textarea>
                 
                 
                 <p class="errors" id="errors-p2"></p>
@@ -378,6 +406,12 @@
         </div>
     </div>
 
+    <div id="lowerButtons">
+        <button onclick="toggleFullscreen()" id="fullscreen-button" class="lilBtn">
+            ⛶ Fullscreen 
+        </button>
+    </div>
+    
     <script>
         // This event is triggered when the user presses the submit button on the third screen
         
@@ -415,6 +449,30 @@
             }
         })
 
+        // Setup textarea hiding
+
+        function setupCollapsableTextArea(subID) {
+            $(`input[type=radio][name=rb-${subID}]`).change(function() {
+                // If "yes" is selected in the radio button group, show the textarea and focus it
+                if (this.value == 'Yes') {
+                    $(`#ta-${subID}`).removeClass("hide");
+                    $(`#ta-${subID}`).focus();
+                } else {
+                    $(`#ta-${subID}`).addClass("hide");
+                }
+            })
+        }
+
+        setupCollapsableTextArea("p2-A");
+        setupCollapsableTextArea("p2-B");
+        setupCollapsableTextArea("p2-C");
+        setupCollapsableTextArea("p2-D");
+
+        $(`input[type=radio][name=rb-p2-E]`).change(function() {
+            $(`#ta-p2-E`).removeClass("hide");
+            $(`#ta-p2-E`).focus();
+        })
+
         // Since Gorilla loads all screens of a task and hides them until they are used
         // I believe it gives us more control to have all of our own screens in a single
         // page, so we can choose how they interact with each other and how data is loaded
@@ -440,11 +498,18 @@
         function validatePage2Inputs() {
             const errors = [];
 
-            if ($('input[name="q1-yes-no"]:checked').length === 0) errors.push("Missing yes/no for 'Does the CXR demonstrate pathology?'");
-            if ($('input[name="q2-yes-no"]:checked').length === 0) errors.push("Missing yes/no for 'Does patient urgently (<6hrs) require further imaging?'");
-            if ($('input[name="q3-yes-no"]:checked').length === 0) errors.push("Missing yes/no for 'Does patient require urgent (<6hrs) management?'");
-            if ($('input[name="q4-yes-no"]:checked').length === 0) errors.push("Missing admit/discharge for 'Will you admit this patient?'");
-            if ($('input[name="q5-radio"]:checked').length === 0) errors.push("Missing selection for 'If you discharge this patient what follow up does the patient require?'");
+            if ($('input[name="rb-p2-A"]:checked').length === 0) errors.push("Missing yes/no for 'Does the CXR demonstrate pathology?'");
+            if ($('input[name="rb-p2-B"]:checked').length === 0) errors.push("Missing yes/no for 'Does patient urgently (<6hrs) require further imaging?'");
+            if ($('input[name="rb-p2-C"]:checked').length === 0) errors.push("Missing yes/no for 'Does patient require urgent (<6hrs) management?'");
+            if ($('input[name="rb-p2-D"]:checked').length === 0) errors.push("Missing yes/no for 'Will you admit this patient?'");
+            if ($('input[name="rb-p2-E"]:checked').length === 0) errors.push("Missing selection for 'If you discharge this patient what follow up does the patient require?'");
+
+            if ($('#ta-p2-A').val().length === 0 && $('#rb-p2-A-Yes:checked').length > 0) errors.push("Missing explanation for 'Does the CXR demonstrate pathology?'");
+            if ($('#ta-p2-B').val().length === 0 && $('#rb-p2-B-Yes:checked').length > 0) errors.push("Does patient urgently (<6hrs) require further imaging?'");
+            if ($('#ta-p2-C').val().length === 0 && $('#rb-p2-C-Yes:checked').length > 0) errors.push("Does patient require urgent (<6hrs) management?'");
+            if ($('#ta-p2-D').val().length === 0 && $('#rb-p2-D-Yes:checked').length > 0) errors.push("Missing explanation for 'Will you admit this patient?'");
+            
+            if ($('#ta-p2-E').val().length === 0) errors.push("Missing explanation for 'If you discharge this patient what follow up does the patient require?'");
 
             if (errors.length > 0) return errors;
         }
@@ -470,23 +535,23 @@
             answers.initialConfidence = $('input[name="rb-p1-A"]:checked').data("name");
 
             // Page 2
-            answers.pathologyYN = $('input[name="q1-yes-no"]:checked').data("name");
-            answers.pathologyAns = $('#q1-answer').val();
-            answers.imagingYN = $('input[name="q2-yes-no"]:checked').data("name");
-            answers.imagingAns = $('#q2-answer').val();
-            answers.managementYN = $('input[name="q3-yes-no"]:checked').data("name");
-            answers.managementAns = $('#q3-answer').val();
-            answers.admitYN = $('input[name="q4-yes-no"]:checked').data("name");
-            answers.admitAns = $('#q4-answer').val();
-            answers.followUp = $('input[name="q5-radio"]:checked').data("name");
-            answers.followUpOutline = $('#q5-answer').val();
+            answers.pathologyYN = $('input[name="rb-p2-A"]:checked').attr("value");
+            answers.pathologyAns = $('#ta-p2-A').val();
+            answers.imagingYN = $('input[name="rb-p2-B"]:checked').attr("value");
+            answers.imagingAns = $('#ta-p2-B').val();
+            answers.managementYN = $('input[name="rb-p2-C"]:checked').attr("value");
+            answers.managementAns = $('#ta-p2-C').val();
+            answers.admitYN = $('input[name="rb-p2-D"]:checked').attr("value");
+            answers.admitAns = $('#ta-p2-D').val();
+            answers.followUp = $('input[name="rb-p2-E"]:checked').attr("value");
+            answers.followUpOutline = $('#ta-p2-E').val();
 
             // Page 3
             answers.finalConfidence = $('input[name="rb-p3-A"]:checked').data("name");
-            answers.consideredXRay = $('input[name="rb-p3-A"]:checked').data("name");
-            answers.complexity = $('input[name="rb-p3-A"]:checked').data("name");
-            answers.highMentalEffort = $('input[name="rb-p3-A"]:checked').data("name");
-            answers.scenarioDifficulty = $('input[name="rb-p3-A"]:checked').data("name");
+            answers.consideredXRay = $('input[name="rb-p3-B"]:checked').data("name");
+            answers.complexity = $('input[name="rb-p3-C"]:checked').data("name");
+            answers.highMentalEffort = $('input[name="rb-p3-D"]:checked').data("name");
+            answers.scenarioDifficulty = $('input[name="rb-p3-E"]:checked').data("name");
 
             console.log(answers);
             return answers;
@@ -498,7 +563,62 @@
             $('#vignette-text-p1').text(vignette);
             $('#vignette-text-p2').text(vignette);
             $('#xray-viewer-iframe').attr("src", viewer);
-            $('#decision-support-iframe').attr("src", support);
+            if (support !== "") {
+                $('#decision-support-iframe').attr("src", support);
+            } else {
+                $('#decision-placeholder').show();
+                console.log("egg");
+            }
+        }
+
+        // Fullscreen management
+
+        var elem = document.documentElement;
+
+        function toggleFullscreen() {
+            if (document.fullscreenElement) {
+                closeFullscreen();
+            } else {
+                openFullscreen();
+            }
+        }
+
+        /* View in fullscreen */
+        function openFullscreen() {
+            $('#fullscreen-button').hide();
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) { /* Safari */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE11 */
+                elem.msRequestFullscreen();
+            }
+        }
+
+        /* Close fullscreen */
+        function closeFullscreen() {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) { /* Safari */
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { /* IE11 */
+                document.msExitFullscreen();
+            }
+        }
+
+        if (document.addEventListener) {
+            document.addEventListener('fullscreenchange', exitHandler, false);
+            document.addEventListener('mozfullscreenchange', exitHandler, false);
+            document.addEventListener('MSFullscreenChange', exitHandler, false);
+            document.addEventListener('webkitfullscreenchange', exitHandler, false);
+        }
+
+        function exitHandler()
+        {
+            if (!document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement)
+            {
+                $('#fullscreen-button').show();
+            }
         }
 
     </script>
