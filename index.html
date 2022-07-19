@@ -430,11 +430,16 @@
         
         //const submitEvent = new CustomEvent('submitResponse', {response: {}});
 
+        // Variables to store time spent on each page
+
+        let startPage1, startPage2, startPage3, endPage3;
+
         // Initialize onClick functions
 
         $("#fullscreen-page-0").click(() => {
             openFullscreen();
             showPage(1);
+            startPage1 = Date.now();
         })
 
         $("#continue-button-p1").click(() => {
@@ -444,6 +449,7 @@
                 console.log(errors);
             } else {
                 showPage(2);
+                startPage2 = Date.now();
             }
         })
 
@@ -454,18 +460,23 @@
                 console.log(errors);
             } else {
                 showPage(3);
+                startPage3 = Date.now();
             }
         })
+
+        // Boolean used to ensure that the final button isn't somehow activated twice
+        let taskComplete = false;
 
         $("#continue-button-p3").click(() => {
             const errors = validatePage3Inputs();
             if (errors) {
                 $('#errors-p3').html(errors.toString().replaceAll(',','<br>'));
                 console.log(errors);
-            } else {
-                document.dispatchEvent(new CustomEvent('submitResponse', {detail: retrieveAnswers()}));
+            } else if (!taskComplete) {
+                endPage3 = Date.now();
                 window.parent.postMessage(retrieveAnswers(), '*');
                 closeFullscreen();
+                taskComplete = true;
             }
         })
 
@@ -573,6 +584,13 @@
             answers.highMentalEffort = $('input[name="rb-p3-D"]:checked').data("name");
             answers.scenarioDifficulty = $('input[name="rb-p3-E"]:checked').data("name");
 
+            // Timing
+            answers.timeStartPage1 = startPage1;
+            answers.timeStartPage2 = startPage2;
+            answers.timeStartPage3 = startPage3;
+            answers.timeEndPage3 = endPage3;
+
+            console.log(answers);
             return answers;
         }
 
