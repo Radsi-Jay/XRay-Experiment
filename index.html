@@ -8,7 +8,19 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div id="page1">
+    <div class="background"></div>
+
+    <div class="page" id="page0">
+        <div class='contents' style='position: absolute; width: 60%; left: 20%; text-align: center'>
+            <h1>
+                You must be in fullscreen to run this task. 
+                Please press the button below to enter fullscreen mode!
+            </h1> 
+            <button class='button' id="fullscreen-page-0">Activate fullscreen</button>
+        </div>
+    </div>
+
+    <div class="page hidden" id="page1">
         <div class="contents" style="position: absolute; width: 60%; left: 20%;">
             <h1>Case:</h1>
             <p id="vignette-text-p1">
@@ -67,7 +79,7 @@
         </div>
     </div>
 
-    <div id="page2" class="hidden">
+    <div id="page2" class="hidden page">
         <div id="xray-viewer">
             <iframe id="xray-viewer-iframe" class="max-width-height" src="" frameborder="0"></iframe>
         </div>
@@ -150,24 +162,26 @@
                 <br/>
 
                 If you discharge this patient, what follow up does the patient require?
-                <ul class="radio-button short" style="margin-top: -5px;">
-                    <li>
-                        <input type="radio" id="rb-p2-E-GP" name="rb-p2-E" value="GP review"/>
-                        <label for="rb-p2-E-GP">GP review</label>
-                    </li>
-                    <li>
-                        <input type="radio" id="rb-p2-E-Spec" name="rb-p2-E" value="Specialist review"/>
-                        <label for="rb-p2-E-Spec">Specialist review</label>
-                    </li>
-                    <li>
-                        <input type="radio" id="rb-p2-E-Prog" name="rb-p2-E" value="Progress imaging"/>
-                        <label for="rb-p2-E-Prog">Progress imaging</label>
-                    </li>
-                    <li>
-                        <input type="radio" id="rb-p2-E-Nil" name="rb-p2-E" value="Nil specific"/>
-                        <label for="rb-p2-E-Nil">Nil specific</label>
-                    </li>
-                </ul>
+                <div style="margin: -20px -10px 50px 0px;">
+                    <ul class="radio-button short" style="margin-top: -5px;">
+                        <li>
+                            <input type="radio" id="rb-p2-E-GP" name="rb-p2-E" value="GP review"/>
+                            <label for="rb-p2-E-GP">GP review</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="rb-p2-E-Spec" name="rb-p2-E" value="Specialist review"/>
+                            <label for="rb-p2-E-Spec">Specialist review</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="rb-p2-E-Prog" name="rb-p2-E" value="Progress imaging"/>
+                            <label for="rb-p2-E-Prog">Progress imaging</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="rb-p2-E-Nil" name="rb-p2-E" value="Nil specific"/>
+                            <label for="rb-p2-E-Nil">Nil specific</label>
+                        </li>
+                    </ul>
+                </div>
                 <br/>
                 <textarea placeholder="Briefly outline follow up required" id="ta-p2-E" name="ta-p2-E" class="hide" rows="4" cols="50"></textarea>
                 
@@ -182,7 +196,7 @@
         </div>
     </div>
 
-    <div id="page3" class="hidden">
+    <div id="page3" class="hidden page">
         <div class="contents" style="position: absolute; width: 80%; left: 10%;">
             
             <h2>Please rate your confidence in this diagnosis.</h2>
@@ -415,9 +429,14 @@
     <script>
         // This event is triggered when the user presses the submit button on the third screen
         
-        const submitEvent = new CustomEvent('submitResponse', {response: {}});
+        //const submitEvent = new CustomEvent('submitResponse', {response: {}});
 
         // Initialize onClick functions
+
+        $("#fullscreen-page-0").click(() => {
+            openFullscreen();
+            showPage(1);
+        })
 
         $("#continue-button-p1").click(() => {
             const errors = validatePage1Inputs();
@@ -445,7 +464,7 @@
                 $('#errors-p3').html(errors.toString().replaceAll(',','<br>'));
                 console.log(errors);
             } else {
-                document.dispatchEvent(submitEvent, retrieveAnswers());
+                document.dispatchEvent(new CustomEvent('submitResponse', {detail: retrieveAnswers()}));
             }
         })
 
@@ -478,7 +497,7 @@
         // page, so we can choose how they interact with each other and how data is loaded
         // into them.
 
-        let currentPage = 1;
+        let currentPage = 0;
 
         function showPage(page) {
             $(`#page${currentPage}`).addClass("hidden");
@@ -505,8 +524,8 @@
             if ($('input[name="rb-p2-E"]:checked').length === 0) errors.push("Missing selection for 'If you discharge this patient what follow up does the patient require?'");
 
             if ($('#ta-p2-A').val().length === 0 && $('#rb-p2-A-Yes:checked').length > 0) errors.push("Missing explanation for 'Does the CXR demonstrate pathology?'");
-            if ($('#ta-p2-B').val().length === 0 && $('#rb-p2-B-Yes:checked').length > 0) errors.push("Does patient urgently (<6hrs) require further imaging?'");
-            if ($('#ta-p2-C').val().length === 0 && $('#rb-p2-C-Yes:checked').length > 0) errors.push("Does patient require urgent (<6hrs) management?'");
+            if ($('#ta-p2-B').val().length === 0 && $('#rb-p2-B-Yes:checked').length > 0) errors.push("Missing explanation for 'Does patient urgently (<6hrs) require further imaging?'");
+            if ($('#ta-p2-C').val().length === 0 && $('#rb-p2-C-Yes:checked').length > 0) errors.push("Missing explanation for 'Does patient require urgent (<6hrs) management?'");
             if ($('#ta-p2-D').val().length === 0 && $('#rb-p2-D-Yes:checked').length > 0) errors.push("Missing explanation for 'Will you admit this patient?'");
             
             if ($('#ta-p2-E').val().length === 0) errors.push("Missing explanation for 'If you discharge this patient what follow up does the patient require?'");
@@ -619,6 +638,12 @@
             {
                 $('#fullscreen-button').show();
             }
+        }
+
+        // Fullscreen check for page0, auto skips page if already fullscreen
+
+        if (document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement) {
+            showPage(1);
         }
 
     </script>
