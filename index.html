@@ -465,7 +465,7 @@
                 console.log(errors);
             } else {
                 document.dispatchEvent(new CustomEvent('submitResponse', {detail: retrieveAnswers()}));
-                window.parent.postMessage(retrieveAnswers());
+                window.parent.postMessage(retrieveAnswers(), '*');
                 console.log("Tried to post message to parent from iframe");
             }
         })
