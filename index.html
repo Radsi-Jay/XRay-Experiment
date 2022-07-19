@@ -13,10 +13,9 @@
     <div class="page" id="page0">
         <div class='contents' style='position: absolute; width: 60%; left: 20%; text-align: center'>
             <h1>
-                You must be in fullscreen to run this task. 
-                Please press the button below to enter fullscreen mode!
+                Press the button below to begin the next trial!
             </h1> 
-            <button class='button' id="fullscreen-page-0">Activate fullscreen</button>
+            <button class='button' id="fullscreen-page-0">Begin Trial</button>
         </div>
     </div>
 
@@ -466,7 +465,7 @@
             } else {
                 document.dispatchEvent(new CustomEvent('submitResponse', {detail: retrieveAnswers()}));
                 window.parent.postMessage(retrieveAnswers(), '*');
-                console.log("Tried to post message to parent from iframe");
+                closeFullscreen();
             }
         })
 
