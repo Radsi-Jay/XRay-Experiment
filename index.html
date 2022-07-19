@@ -590,6 +590,22 @@
             }
         }
 
+        // Captures the message from Gorilla to load the variables
+        window.addEventListener('message', event => {
+            // IMPORTANT: check the origin of the data!
+            if (event.origin.startsWith('https://app.gorilla.sc')) {
+                // The data was sent from your site.
+                // Data sent with postMessage is stored in event.data:
+                console.log(event.data);
+                loadVariables(event.data.row, event.data.xray, event.data.ai);
+            } else {
+                // The data was NOT sent from your site!
+                // Be careful! Do not use it. This else branch is
+                // here just for clarity, you usually shouldn't need it.
+                return;
+            }
+        });
+
         // Fullscreen management
 
         var elem = document.documentElement;
