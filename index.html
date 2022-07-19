@@ -465,6 +465,7 @@
                 console.log(errors);
             } else {
                 document.dispatchEvent(new CustomEvent('submitResponse', {detail: retrieveAnswers()}));
+                parent.postMessage(retrieveAnswers());
             }
         })
 
@@ -572,7 +573,6 @@
             answers.highMentalEffort = $('input[name="rb-p3-D"]:checked').data("name");
             answers.scenarioDifficulty = $('input[name="rb-p3-E"]:checked').data("name");
 
-            console.log(answers);
             return answers;
         }
 
@@ -597,7 +597,7 @@
                 // The data was sent from your site.
                 // Data sent with postMessage is stored in event.data:
                 console.log(event.data);
-                loadVariables(event.data.row, event.data.xray, event.data.ai);
+                loadVariables(event.data.vignette, event.data.xray, event.data.ai);
             } else {
                 // The data was NOT sent from your site!
                 // Be careful! Do not use it. This else branch is
