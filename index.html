@@ -458,6 +458,8 @@
             }
         })
 
+        let messageTarget;
+
         $("#continue-button-p3").click(() => {
             const errors = validatePage3Inputs();
             if (errors) {
@@ -465,7 +467,8 @@
                 console.log(errors);
             } else {
                 document.dispatchEvent(new CustomEvent('submitResponse', {detail: retrieveAnswers()}));
-                parent.postMessage(retrieveAnswers());
+                messageTarget.source.postMessage(retrieveAnswers(), messageTarget.origin);
+                console.log("Tried to post message to parent from iframe");
             }
         })
 
@@ -598,6 +601,7 @@
                 // Data sent with postMessage is stored in event.data:
                 console.log(event.data);
                 loadVariables(event.data.vignette, event.data.xray, event.data.ai);
+                messageTarget = event;
             } else {
                 // The data was NOT sent from your site!
                 // Be careful! Do not use it. This else branch is
