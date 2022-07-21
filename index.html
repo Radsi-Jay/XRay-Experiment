@@ -31,9 +31,9 @@
             </p>
             <div style="height: 1px; width: 100%; background-color:#20a5d6;"></div>
             <br/>
-            <label for="q0-answer">What is your provisional diagnosis?</label>
+            <label for="ta-p1-A">What is your provisional diagnosis?</label>
             <br/>
-            <textarea id="q0-answer" name="q0-answer" rows="4" cols="50"></textarea>
+            <textarea id="ta-p1-A" name="ta-p1-A" rows="4" cols="50"></textarea>
             <h2>Please rate your confidence in the provisional diagnosis?</h2>
             <div>
                 <ul class="radio-button">
@@ -500,8 +500,12 @@
         setupCollapsableTextArea("p2-D");
 
         $(`input[type=radio][name=rb-p2-E]`).change(function() {
-            $(`#ta-p2-E`).removeClass("hide");
-            $(`#ta-p2-E`).focus();
+            if (this.value != 'Nil specific') {
+                $(`#ta-p2-E`).removeClass("hide");
+                $(`#ta-p2-E`).focus();
+            } else {
+                $(`#ta-p2-E`).addClass("hide");
+            }
         })
 
         // Since Gorilla loads all screens of a task and hides them until they are used
@@ -517,11 +521,40 @@
             $(`#page${currentPage}`).removeClass("hidden");
         }
 
+        // Setup turning radio buttons and text areas back to normal colours after error
+
+        document.querySelectorAll("ul.radio-button").forEach(buttonGroup => {
+            buttonGroup.querySelectorAll('input[type="radio"]').forEach(button => {
+                button.addEventListener('change', () => {
+                    buttonGroup.classList.remove("error");
+                })
+            })
+        });
+
+        document.querySelectorAll("textarea").forEach(textarea => {
+            textarea.addEventListener('input', () => {
+                textarea.classList.remove("error");
+            })
+        })
+
+        // Checks that required radio buttons and associated text areas are complete
+
+        function setupCheckedRadioButton(subID, errorString, errorList) {
+            if ($(`input[name="rb-${subID}"]:checked`).length === 0) {
+                document.querySelector(`input[name="rb-${subID}"]`).parentElement.parentElement.classList.add("error");
+                errorList.push(errorString);
+            }
+        }
+
+
         function validatePage1Inputs() {
             const errors = [];
 
-            if ($('#q0-answer').val().length === 0) errors.push("Missing provisional diagnosis");
-            if ($('input[name="rb-p1-A"]:checked').length === 0) errors.push("Missing confidence in diagnosis");
+            if ($('#ta-p1-A').val().length === 0) {
+                $('#ta-p1-A').addClass("error");
+                errors.push("Missing provisional diagnosis");
+            }
+            setupCheckedRadioButton("p1-A", "Missing confidence in diagnosis", errors);
 
             if (errors.length > 0) return errors;
         }
@@ -529,18 +562,32 @@
         function validatePage2Inputs() {
             const errors = [];
 
-            if ($('input[name="rb-p2-A"]:checked').length === 0) errors.push("Missing yes/no for 'Does the CXR demonstrate pathology?'");
-            if ($('input[name="rb-p2-B"]:checked').length === 0) errors.push("Missing yes/no for 'Does patient urgently (<6hrs) require further imaging?'");
-            if ($('input[name="rb-p2-C"]:checked').length === 0) errors.push("Missing yes/no for 'Does patient require urgent (<6hrs) management?'");
-            if ($('input[name="rb-p2-D"]:checked').length === 0) errors.push("Missing yes/no for 'Will you admit this patient?'");
-            if ($('input[name="rb-p2-E"]:checked').length === 0) errors.push("Missing selection for 'If you discharge this patient what follow up does the patient require?'");
+            setupCheckedRadioButton("p2-A", "Missing yes/no for 'Does the CXR demonstrate pathology?'", errors);
+            setupCheckedRadioButton("p2-B", "Missing yes/no for 'Does patient urgently (<6hrs) require further imaging?'", errors);
+            setupCheckedRadioButton("p2-C", "Missing yes/no for 'Does patient require urgent (<6hrs) management?'", errors);
+            setupCheckedRadioButton("p2-D", "Missing yes/no for 'Will you admit this patient?'", errors);
+            setupCheckedRadioButton("p2-E", "Missing selection for 'If you discharge this patient what follow up does the patient require?'", errors);
 
-            if ($('#ta-p2-A').val().length === 0 && $('#rb-p2-A-Yes:checked').length > 0) errors.push("Missing explanation for 'Does the CXR demonstrate pathology?'");
-            if ($('#ta-p2-B').val().length === 0 && $('#rb-p2-B-Yes:checked').length > 0) errors.push("Missing explanation for 'Does patient urgently (<6hrs) require further imaging?'");
-            if ($('#ta-p2-C').val().length === 0 && $('#rb-p2-C-Yes:checked').length > 0) errors.push("Missing explanation for 'Does patient require urgent (<6hrs) management?'");
-            if ($('#ta-p2-D').val().length === 0 && $('#rb-p2-D-Yes:checked').length > 0) errors.push("Missing explanation for 'Will you admit this patient?'");
-            
-            if ($('#ta-p2-E').val().length === 0) errors.push("Missing explanation for 'If you discharge this patient what follow up does the patient require?'");
+            if ($('#ta-p2-A').val().length === 0 && $('#rb-p2-A-Yes:checked').length > 0) {
+                $('#ta-p2-A').addClass("error");
+                errors.push("Missing explanation for 'Does the CXR demonstrate pathology?'");
+            }
+            if ($('#ta-p2-B').val().length === 0 && $('#rb-p2-B-Yes:checked').length > 0) {
+                $('#ta-p2-B').addClass("error");
+                errors.push("Missing explanation for 'Does patient urgently (<6hrs) require further imaging?'");
+            }
+            if ($('#ta-p2-C').val().length === 0 && $('#rb-p2-C-Yes:checked').length > 0) {
+                $('#ta-p2-C').addClass("error");
+                errors.push("Missing explanation for 'Does patient require urgent (<6hrs) management?'");
+            }
+            if ($('#ta-p2-D').val().length === 0 && $('#rb-p2-D-Yes:checked').length > 0) {
+                $('#ta-p2-D').addClass("error");
+                errors.push("Missing explanation for 'Will you admit this patient?'");
+            }
+            if ($('#ta-p2-E').val().length === 0 && $('#rb-p2-E-Nil:checked').length === 0 && $('input[name="rb-p2-E"]:checked').length > 0) {
+                $('#ta-p2-E').addClass("error");
+                errors.push("Missing explanation for 'If you discharge this patient what follow up does the patient require?'");
+            }
 
             if (errors.length > 0) return errors;
         }
@@ -548,11 +595,11 @@
         function validatePage3Inputs() {
             const errors = [];
 
-            if ($('input[name="rb-p3-A"]:checked').length === 0) errors.push("Missing answer for 'Please rate your confidence in this diagnosis.'");
-            if ($('input[name="rb-p3-B"]:checked').length === 0) errors.push("Missing answer for 'I considered the output of the Chest X-ray AI in my clinical decisions for this patient scenario.'");
-            if ($('input[name="rb-p3-C"]:checked').length === 0) errors.push("Missing answer for 'The content of this patient scenario was very complex.'");
-            if ($('input[name="rb-p3-D"]:checked').length === 0) errors.push("Missing answer for 'I invested a very high mental effort in the complexity of this patient scenario.'");
-            if ($('input[name="rb-p3-E"]:checked').length === 0) errors.push("Missing answer for 'The patient scenario I just finished was...'");
+            setupCheckedRadioButton("p3-A", "Missing answer for 'Please rate your confidence in this diagnosis.'", errors);
+            setupCheckedRadioButton("p3-B", "Missing answer for 'I considered the output of the Chest X-ray AI in my clinical decisions for this patient scenario.'", errors);
+            setupCheckedRadioButton("p3-C", "Missing answer for 'The content of this patient scenario was very complex.'", errors);
+            setupCheckedRadioButton("p3-D", "Missing answer for 'I invested a very high mental effort in the complexity of this patient scenario.'", errors);
+            setupCheckedRadioButton("p3-E", "Missing answer for 'The patient scenario I just finished was...'", errors);
 
             if (errors.length > 0) return errors;
         }
@@ -562,7 +609,7 @@
         function retrieveAnswers() {
             const answers = {};
             // Page 1
-            answers.provisionalDiagnosis = $('#q0-answer').val();
+            answers.provisionalDiagnosis = $('#ta-p1-A').val();
             answers.initialConfidence = $('input[name="rb-p1-A"]:checked').data("name");
 
             // Page 2

@@ -51,6 +51,13 @@ body, html {
     border-radius: 15px;
     transition-duration: 0.2s;
     transition-property: background-color;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }
 
 .button:hover {
@@ -183,6 +190,10 @@ textarea {
     resize: none;
 }
 
+textarea.error {
+    border: 2px solid red;
+}
+
 textarea.hide {
     display: none;
 }
@@ -221,6 +232,17 @@ textarea::placeholder {
     border:1px solid var(--btn-col); 
     cursor:pointer;
     z-index:90;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.radio-button.error label {
+    border:1px solid red; 
 }
 
 .radio-button.short label {
