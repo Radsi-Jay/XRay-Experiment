@@ -21,7 +21,7 @@
 
     <div class="page hidden" id="page1">
         <div class="contents" style="position: absolute; width: 60%; left: 20%;">
-            <h1>Case:</h1>
+            <h1 id="case-counter">Case:</h1>
             <p id="vignette-text-p1">
                 PLACEHOLDER VIGNETTE TEXT
             </p>
@@ -94,7 +94,7 @@
             </p>
         </div>
         <div class="container" id="response-container">
-            <div class="contents" id="response">
+            <div class="contents reduce-v-padding" id="response">
 
                 <p style="display: inline-block; margin-top: -10px;">Does the CXR demonstrate pathology?</p>
                 <div style="display: inline-block;">
@@ -196,11 +196,11 @@
     </div>
 
     <div id="page3" class="hidden page">
-        <div class="contents" style="position: absolute; width: 80%; left: 10%;">
+        <div class="contents" style="position: absolute; width: 80%; left: 10%; top: 15%; height: 70%">
             
             <h2>Please rate your confidence in this diagnosis.</h2>
             <div>
-                <ul class="radio-button">
+                <ul class="radio-button large">
                     <li>
                         <input type="radio" id="rb-p3-A1" name="rb-p3-A" data-name="1"/>
                         <label for="rb-p3-A1">Very Unconfident</label>
@@ -236,7 +236,7 @@
 
             <h2>I considered the output of the Chest X-ray AI in my clinical decisions for this patient scenario.</h2>
             <div>
-                <ul class="radio-button">
+                <ul class="radio-button large">
                     <li>
                         <input type="radio" id="rb-p3-B1" name="rb-p3-B" data-name="1"/>
                         <label for="rb-p3-B1">Strongly Disagree</label>
@@ -272,7 +272,7 @@
 
             <h2>The content of this patient scenario was very complex.</h2>
             <div>
-                <ul class="radio-button">
+                <ul class="radio-button large">
                     <li>
                         <input type="radio" id="rb-p3-C0" name="rb-p3-C" data-name="0"/>
                         <label for="rb-p3-C0">0 (Not at all the case)</label>
@@ -324,7 +324,7 @@
 
             <h2>I invested a very high mental effort in the complexity of this patient scenario.</h2>
             <div>
-                <ul class="radio-button">
+                <ul class="radio-button large">
                     <li>
                         <input type="radio" id="rb-p3-D0" name="rb-p3-D" data-name="0"/>
                         <label for="rb-p3-D0">0 (Not at all the case)</label>
@@ -376,7 +376,7 @@
 
             <h2>The patient scenario I just finished was...</h2>
             <div>
-                <ul class="radio-button">
+                <ul class="radio-button large">
                     <li>
                         <input type="radio" id="rb-p3-E1" name="rb-p3-E" data-name="1"/>
                         <label for="rb-p3-E1">Very Easy</label>
@@ -643,26 +643,26 @@
 
         // This function should be called to set the vignette, xray viewer and decision support on the page
 
-        function loadVariables(vignette, viewer, support) {
-            $('#vignette-text-p1').text(vignette);
-            $('#vignette-text-p2').text(vignette);
+        function loadVariables(vignette, viewer, support, trialNumber, totalTrials) {
+            $('#vignette-text-p1').html(vignette);
+            $('#vignette-text-p2').html(vignette);
             $('#xray-viewer-iframe').attr("src", viewer);
             if (support !== "") {
                 $('#decision-support-iframe').attr("src", support);
             } else {
                 $('#decision-placeholder').show();
-                console.log("egg");
             }
+            $('#case-counter').text(`Patient ${trialNumber}/${totalTrials}`);
         }
 
         // Captures the message from Gorilla to load the variables
         window.addEventListener('message', event => {
             // IMPORTANT: check the origin of the data!
-            if (event.origin.startsWith('https://app.gorilla.sc')) {
+            if (event.origin.startsWith('https://app.gorilla.sc') || event.origin.startsWith('https://research.sc')) {
                 // The data was sent from your site.
                 // Data sent with postMessage is stored in event.data:
                 console.log(event.data);
-                loadVariables(event.data.vignette, event.data.xray, event.data.ai);
+                loadVariables(event.data.vignette, event.data.xray, event.data.ai, event.data.trialNumber, event.data.totalTrials);
             } else {
                 // The data was NOT sent from your site!
                 // Be careful! Do not use it. This else branch is

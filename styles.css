@@ -108,8 +108,16 @@ body, html {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.reduce-v-padding p {
+    margin-bottom: 10px;
+}
+
 .vignette::-webkit-scrollbar {
     display: block;
+}
+
+#page3 h2 {
+    margin-top: 40px;
 }
 
 #vignette-p1 {
@@ -247,6 +255,11 @@ textarea::placeholder {
 
 .radio-button.short label {
     padding: 0px 10px;
+}
+
+.radio-button.large label {
+    font-size: larger;
+    padding: 15px 15px;
 }
 
 .radio-button label:hover {
