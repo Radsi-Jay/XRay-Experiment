@@ -653,6 +653,9 @@
                 $('#decision-placeholder').show();
             }
             $('#case-counter').text(`Patient ${trialNumber}/${totalTrials}`);
+            if (trialNumber > 0) {
+                $('#fullscreen-page-0').click();
+            }
         }
 
         // Captures the message from Gorilla to load the variables
